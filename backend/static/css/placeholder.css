@@ -1,0 +1,30 @@
+/*
+ * Placeholder CSS file
+ *
+ * This file ensures the static/css directory is created and tracked in version control.
+ * Replace or supplement this with your actual CSS files.
+ */
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f5a623;
+    --text-color: #333;
+    --background-color: #fff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Add your custom styles here */
