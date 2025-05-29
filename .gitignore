@@ -27,11 +27,8 @@ var/
 *.log
 *.pot
 *.mo
-*.sqlite3
 *.db
-*.env
 .env/
-.env.*.local
 .venv/
 venv/
 ENV/
