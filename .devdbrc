@@ -1,0 +1,10 @@
+[
+  {
+    "type": "sqlite",
+    "path": "c:\\Users\\J\\Desktop\\School\\2025\\Summer\\CSE-499\\CloudWords\\cloudywords\\backend\\db.sqlite3"
+  },
+  {
+    "type": "sqlite",
+    "path": "c:\\Users\\J\\Desktop\\School\\2025\\Summer\\CSE-499\\CloudWords\\cloudywords\\backend\\db.sqlite"
+  }
+]
