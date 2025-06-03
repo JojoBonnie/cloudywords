@@ -24,7 +24,7 @@ const Layout = () => {
                 <div className="flex">
                   <div className="flex flex-shrink-0 items-center">
                     <Link to="/" className="text-xl font-bold text-primary-600">
-                      Word Cloud Generator
+                      Cloudy Words
                     </Link>
                   </div>
                   <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -177,10 +177,10 @@ const Layout = () => {
       </main>
 
       <footer className="bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-8 md:flex md:items-center md:justify-between lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 py-8 md:flex md:items-center md:justify-center lg:px-8">
           <div className="mt-8 md:order-1 md:mt-0">
             <p className="text-center text-xs leading-5 text-gray-500">
-              &copy; {new Date().getFullYear()} Word Cloud Generator. University Project.
+              &copy; {new Date().getFullYear()} Cloudy Words. University Project.
             </p>
           </div>
         </div>

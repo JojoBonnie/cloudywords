@@ -1,6 +1,6 @@
-# Word Cloud Generator - Developer Setup Guide
+# Cloudy Words - Developer Setup Guide
 
-This guide will help you set up the Word Cloud Generator project for local development.
+This guide will help you set up the Cloudy Words project for local development.
 
 ## Prerequisites
 

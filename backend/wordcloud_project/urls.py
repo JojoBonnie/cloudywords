@@ -12,7 +12,7 @@ from drf_yasg import openapi
 # API Schema view for documentation
 schema_view = get_schema_view(
     openapi.Info(
-        title="Word Cloud Generator API",
+        title="Cloudy Words API",
         default_version='v1',
         description="API for generating and managing word clouds",
         terms_of_service="https://www.example.com/terms/",
