@@ -22,7 +22,7 @@ const Home = () => {
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Word Cloud Generator
+              Cloudy Words
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Create beautiful, customizable word clouds with AI assistance. Perfect for presentations, 
@@ -73,7 +73,7 @@ const Home = () => {
             Everything you need to create perfect word clouds
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Our word cloud generator combines powerful customization options with AI assistance to help you create 
+            Our cloudy words combines powerful customization options with AI assistance to help you create 
             beautiful visualizations for any purpose.
           </p>
         </div>

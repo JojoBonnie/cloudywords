@@ -1,7 +1,7 @@
 """
 Django settings for wordcloud_project project.
 
-This is the main configuration file for the Word Cloud Generator project. 
+This is the main configuration file for the Cloudy Words project. 
 It contains settings for database connections, authentication, static/media files,
 API integrations, and security configurations.
 
@@ -151,10 +151,10 @@ WSGI_APPLICATION = 'wordcloud_project.wsgi.application'
 # In production: Set DATABASE_URL in environment variables for PostgreSQL, MySQL, etc.
 # Example: DATABASE_URL=postgres://user:password@host:port/database
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),  # SQLite fallback
-        conn_max_age=600  # Connection persistence in seconds
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Default to SQLite for development
+        'NAME': BASE_DIR / 'db.sqlite3',         # SQLite database file
+    }
 }
 
 # -------------------------------------------------------------------------
@@ -215,6 +215,10 @@ MEDIA_URL = '/media/'
 # Directory where media files are stored
 MEDIA_ROOT = BASE_DIR / 'media'
 
+LOGIN_REDIRECT_URL = '/dashboard/' # Where to go after login
+ACCOUNT_LOGOUT_REDIRECT_URL = '/' # Where to go after logout
+SOCIALACCOUNT_LOGIN_ON_GET = True  # Automatically log in users after social account authentication
+
 # -------------------------------------------------------------------------
 # Storage Backends
 # -------------------------------------------------------------------------
@@ -258,6 +262,7 @@ REST_FRAMEWORK = {
     ),
     # Default permission policy - require authentication
     'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated',
     ),
     # Pagination settings
