@@ -150,12 +150,7 @@ WSGI_APPLICATION = 'wordcloud_project.wsgi.application'
 # In development: SQLite database is used by default
 # In production: Set DATABASE_URL in environment variables for PostgreSQL, MySQL, etc.
 # Example: DATABASE_URL=postgres://user:password@host:port/database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # Default to SQLite for development
-        'NAME': BASE_DIR / 'db.sqlite3',         # SQLite database file
-    }
-}
+DATABASES = {    'default': {        'ENGINE': 'django.db.backends.sqlite3',        'NAME': BASE_DIR / 'db.sqlite3',    }}
 
 # -------------------------------------------------------------------------
 # Password Validation

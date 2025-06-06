@@ -40,7 +40,7 @@ class WordCloudExportSerializer(serializers.Serializer):
 class AIWordSuggestionsSerializer(serializers.Serializer):
     """Serializer for AI word suggestion request"""
     topic = serializers.CharField(max_length=100)
-    count = serializers.IntegerField(min_value=10, max_value=500, default=100)
+    count = serializers.IntegerField(min_value=1, max_value=500, default=100)
 
 
 class UserCreditSerializer(serializers.ModelSerializer):

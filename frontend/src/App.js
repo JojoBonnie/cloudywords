@@ -25,22 +25,16 @@ function App() {
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          
+
           {/* Protected routes */}
           <Route path="dashboard" element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
+            <Dashboard />
           } />
           <Route path="create" element={
-            <PrivateRoute>
-              <CreateWordCloud />
-            </PrivateRoute>
+            <CreateWordCloud />
           } />
           <Route path="edit/:id" element={
-            <PrivateRoute>
-              <EditWordCloud />
-            </PrivateRoute>
+            <EditWordCloud />
           } />
           <Route path="view/:id" element={
             <PrivateRoute>
@@ -57,13 +51,13 @@ function App() {
               <MfaSetup />
             </PrivateRoute>
           } />
-          
+
           {/* Fallback routes */}
           <Route path="404" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Route>
       </Routes>
-      
+
       <ToastContainer position="bottom-right" />
     </>
   );
