@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       // Configure axios with the token
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
+
       // Fetch user info
       fetchUserInfo();
     } else {
@@ -30,15 +30,16 @@ export const AuthProvider = ({ children }) => {
   const fetchUserInfo = async () => {
     try {
       const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/auth/user/`);
+      console.log('Fetching User (TEST):', userResponse.data);
       setCurrentUser(userResponse.data);
-      
+
       // Fetch user credits
       const creditsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/user/credits/`);
       setUserCredits(creditsResponse.data.credits_remaining);
-      
+
       setLoading(false);
     } catch (err) {
-      console.error('Error fetching user info:', err);
+      console.error('Error fetching user info (TEST):', err);
       logout();
       setLoading(false);
     }
@@ -52,16 +53,20 @@ export const AuthProvider = ({ children }) => {
         email, 
         password 
       });
-      
+
       // Store token in localStorage
-      localStorage.setItem('token', response.data.access_token);
-      
+      // Handle both token formats (JWT and regular token)
+      console.log('Response:', response.data);
+      const token = response.data.access_token || response.data.access || response.data.key;
+      console.log('Token:', token);
+      localStorage.setItem('token', token);
+
       // Set default Authorization header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
-      
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
       // Fetch user info
       await fetchUserInfo();
-      
+
       toast.success('Login successful!');
       return true;
     } catch (err) {
@@ -76,6 +81,7 @@ export const AuthProvider = ({ children }) => {
   // Register function
   const register = async (username, email, password1, password2) => {
     try {
+      console.log('Registering user:', { username, email, password1, password2 });
       setLoading(true);
       await axios.post(`${process.env.REACT_APP_API_URL}/auth/registration/`, {
         username,
@@ -83,7 +89,7 @@ export const AuthProvider = ({ children }) => {
         password1,
         password2
       });
-      
+
       toast.success('Registration successful! Please check your email to verify your account.');
       return true;
     } catch (err) {
