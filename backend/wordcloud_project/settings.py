@@ -39,11 +39,11 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-dev-key-change-in-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Set DEBUG=True in .env for development, False for production
-DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+DEBUG = True
 
 # Hosts that are allowed to access this application
 # For production, add your domain names to this list
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = ['*']
 
 # -------------------------------------------------------------------------
 # Application Definition
@@ -91,24 +91,21 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # Security middleware - should be at/near the top
     'django.middleware.security.SecurityMiddleware',     # Security headers and checks
-    
+
     # Static file serving (development and production)
     'whitenoise.middleware.WhiteNoiseMiddleware',        # Efficient static file serving
-    
+
     # Session and CORS handling
     'django.contrib.sessions.middleware.SessionMiddleware',  # Session support
     'corsheaders.middleware.CorsMiddleware',             # CORS handling (must be before CommonMiddleware)
     'django.middleware.common.CommonMiddleware',         # Common request processing
-    
-    # Security middleware (duplicate) - this appears to be a mistake, can be removed
-    "django.middleware.security.SecurityMiddleware",
-    
+
     # Authentication middlewares
     "allauth.account.middleware.AccountMiddleware",      # Allauth account handling
     'django.middleware.csrf.CsrfViewMiddleware',         # CSRF protection
     'django.contrib.auth.middleware.AuthenticationMiddleware',  # Authentication
     'django_otp.middleware.OTPMiddleware',               # Two-factor authentication
-    
+
     # Other middleware
     'django.contrib.messages.middleware.MessageMiddleware',  # Flash messages
     'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Clickjacking protection
@@ -282,6 +279,17 @@ SIMPLE_JWT = {
 }
 
 # -------------------------------------------------------------------------
+# dj-rest-auth Settings
+# -------------------------------------------------------------------------
+# Configure dj-rest-auth to use JWT tokens
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'jwt-auth'
+JWT_AUTH_REFRESH_COOKIE = 'jwt-refresh-token'
+REST_AUTH_SERIALIZERS = {
+    'JWT_SERIALIZER': 'rest_framework_simplejwt.serializers.TokenObtainPairSerializer',
+}
+
+# -------------------------------------------------------------------------
 # Authentication Settings
 # -------------------------------------------------------------------------
 # Configure authentication backends
@@ -294,9 +302,9 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 # AllAuth settings
-ACCOUNT_EMAIL_REQUIRED = True                 # Email is required for registration
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']  # Required fields for signup
 ACCOUNT_EMAIL_VERIFICATION = 'optional'       # Email verification is optional
-ACCOUNT_AUTHENTICATION_METHOD = 'email'       # Use email for authentication (corrected setting name)
+ACCOUNT_LOGIN_METHODS = {'email'}             # Use email for authentication
 ACCOUNT_ADAPTER = 'authentication.adapters.CustomAccountAdapter'  # Custom adapter for email confirmation
 
 # -------------------------------------------------------------------------
@@ -337,7 +345,8 @@ SOCIALACCOUNT_PROVIDERS = {
 # -------------------------------------------------------------------------
 # In development: Console backend (prints emails to console)
 # In production: Configure SMTP server via environment variables
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "backend/local_emails")
 
 # -------------------------------------------------------------------------
 # API Integration Settings

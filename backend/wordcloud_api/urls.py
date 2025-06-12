@@ -10,7 +10,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path('wordclouds/', WordCloudListCreateView.as_view(), name='wordcloud-list-create'),
+    path('wordclouds/', WordCloudListCreateView.as_view(), name='wordcloud-list'),
     path('wordclouds/<int:pk>/', WordCloudDetailView.as_view(), name='wordcloud-detail'),
     path('wordclouds/generate/', GenerateWordCloudView.as_view(), name='wordcloud-generate'),
     path('wordclouds/<int:pk>/export/', WordCloudExportView.as_view(), name='wordcloud-export'),
