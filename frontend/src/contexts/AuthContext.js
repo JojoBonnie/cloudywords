@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       // Configure axios with the token
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.defaults.headers.common['Authorization'] = `Token ${token}`;
 
       // Fetch user info
       fetchUserInfo();
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   const fetchUserInfo = async () => {
     try {
       const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/auth/user/`);
-      console.log('Fetching User (TEST):', userResponse.data);
+      console.log('User fetched successfully:', userResponse.data);
       setCurrentUser(userResponse.data);
 
       // Fetch user credits
@@ -48,31 +48,52 @@ export const AuthProvider = ({ children }) => {
   // Login function
   const login = async (email, password) => {
     try {
+      console.log('Login attempt started...');
       setLoading(true);
+      setError(null); // Clear previous errors
+      
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login/`, { 
         email, 
         password 
       });
 
+      console.log('Login response received:', response.data);
+      
       // Store token in localStorage
       // Handle both token formats (JWT and regular token)
-      console.log('Response:', response.data);
       const token = response.data.access_token || response.data.access || response.data.key;
-      console.log('Token:', token);
+      console.log('Token extracted:', token);
+      
+      if (!token) {
+        throw new Error('No authentication token received');
+      }
+      
       localStorage.setItem('token', token);
+      console.log('Token stored in localStorage');
 
       // Set default Authorization header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+      console.log('Authorization header set');
 
-      // Fetch user info
-      await fetchUserInfo();
+      // Fetch user info - but don't let it block the login success
+      try {
+        console.log('Fetching user info...');
+        await fetchUserInfo();
+        console.log('User info fetched successfully');
+      } catch (userInfoError) {
+        console.warn('Failed to fetch user info after login, but login was successful:', userInfoError);
+        // Set loading to false even if user info fetch fails
+        setLoading(false);
+      }
 
+      console.log('Login process completed successfully');
       toast.success('Login successful!');
       return true;
     } catch (err) {
       console.error('Login error:', err);
-      setError(err.response?.data?.detail || 'Login failed. Please check your credentials.');
-      toast.error(err.response?.data?.detail || 'Login failed. Please check your credentials.');
+      const errorMessage = err.response?.data?.detail || err.message || 'Login failed. Please check your credentials.';
+      setError(errorMessage);
+      toast.error(errorMessage);
       setLoading(false);
       return false;
     }
@@ -91,6 +112,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       toast.success('Registration successful! Please check your email to verify your account.');
+      setLoading(false);
       return true;
     } catch (err) {
       console.error('Registration error:', err);
@@ -116,6 +138,7 @@ export const AuthProvider = ({ children }) => {
       delete axios.defaults.headers.common['Authorization'];
       setCurrentUser(null);
       setUserCredits(0);
+      setLoading(false);
       toast.info('You have been logged out');
     }
   };
