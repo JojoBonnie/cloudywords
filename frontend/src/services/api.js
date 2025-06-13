@@ -63,29 +63,29 @@ export const wordCloudApi = {
 
 // AI Suggestions API
 export const aiApi = {
-  getWordSuggestions: (topic, count) => api.post('/ai/suggestions/', { topic, count }),
+  getWordSuggestions: (topic, count) => api.post('ai/suggestions/', { topic, count }),
 };
 
 // User API
 export const userApi = {
-  getCredits: () => api.get('/user/credits/'),
+  getCredits: () => api.get('user/credits/'),
 };
 
 // Auth API
 export const authApi = {
-  login: (email, password) => api.post('/auth/login/', { email, password }),
+  login: (email, password) => api.post('auth/login/', { email, password }),
   
-  register: (userData) => api.post('/auth/registration/', userData),
+  register: (userData) => api.post('auth/registration/', userData),
   
-  logout: () => api.post('/auth/logout/'),
+  logout: () => api.post('auth/logout/'),
   
-  getUser: () => api.get('/auth/user/'),
+  getUser: () => api.get('auth/user/'),
   
-  setupMFA: () => api.post('/auth/mfa/setup/'),
+  setupMFA: () => api.post('auth/mfa/setup/'),
   
-  verifyMFA: (token) => api.post('/auth/mfa/verify/', { token }),
+  verifyMFA: (token) => api.post('auth/mfa/verify/', { token }),
   
-  disableMFA: () => api.post('/auth/mfa/disable/'),
+  disableMFA: () => api.post('auth/mfa/disable/'),
 };
 
 export default api;

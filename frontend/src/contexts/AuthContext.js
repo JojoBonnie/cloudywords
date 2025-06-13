@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
   const fetchUserInfo = async () => {
     try {
       const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/auth/user/`);
-      console.log('User fetched successfully:', userResponse.data);
       setCurrentUser(userResponse.data);
 
       // Fetch user credits
@@ -48,7 +47,6 @@ export const AuthProvider = ({ children }) => {
   // Login function
   const login = async (email, password) => {
     try {
-      console.log('Login attempt started...');
       setLoading(true);
       setError(null); // Clear previous errors
       
@@ -56,37 +54,29 @@ export const AuthProvider = ({ children }) => {
         email, 
         password 
       });
-
-      console.log('Login response received:', response.data);
       
       // Store token in localStorage
       // Handle both token formats (JWT and regular token)
       const token = response.data.access_token || response.data.access || response.data.key;
-      console.log('Token extracted:', token);
       
       if (!token) {
         throw new Error('No authentication token received');
       }
       
       localStorage.setItem('token', token);
-      console.log('Token stored in localStorage');
 
       // Set default Authorization header
       axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-      console.log('Authorization header set');
 
       // Fetch user info - but don't let it block the login success
       try {
-        console.log('Fetching user info...');
         await fetchUserInfo();
-        console.log('User info fetched successfully');
       } catch (userInfoError) {
         console.warn('Failed to fetch user info after login, but login was successful:', userInfoError);
         // Set loading to false even if user info fetch fails
         setLoading(false);
       }
 
-      console.log('Login process completed successfully');
       toast.success('Login successful!');
       return true;
     } catch (err) {
@@ -102,7 +92,6 @@ export const AuthProvider = ({ children }) => {
   // Register function
   const register = async (username, email, password1, password2) => {
     try {
-      console.log('Registering user:', { username, email, password1, password2 });
       setLoading(true);
       await axios.post(`${process.env.REACT_APP_API_URL}/auth/registration/`, {
         username,
