@@ -46,8 +46,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: release.zip           # relative to backend → OK
-          if-no-files-found: error    # fail fast if something’s wrong
+          path: |
+            release.zip
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
