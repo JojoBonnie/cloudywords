@@ -35,7 +35,7 @@ ENV/
 env.bak/
 pip-log.txt
 pip-delete-this-directory.txt
-env_production.json
+env_production.*
 
 # -------------------
 # Jupyter Notebooks
