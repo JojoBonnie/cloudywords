@@ -8,6 +8,9 @@ on:
   push:
     branches:
       - jojo-final
+    paths:
+      - 'backend/**'
+      - '.github/workflows/jojo-final_cloudywords-api.yml'
   workflow_dispatch:
 
 jobs:
@@ -15,7 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read #This is required for actions/checkout
-
+    defaults:
+        run:
+            working-directory: backend # Set the working directory to the backend folder
     steps:
       - uses: actions/checkout@v4
 
