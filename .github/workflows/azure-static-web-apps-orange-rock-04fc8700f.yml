@@ -3,36 +3,47 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - jojo-final
+      - jojo-final    # deploy only from this branch
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - jojo-final
 
 jobs:
+  # ─────────────────────────────── Build & Deploy ──────────────────────────────
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
+
     steps:
+      # 1. Checkout repo
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
+
+      # 2. Build & deploy with Static Web Apps action
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          CI: ""                         # <- turns ESLint warnings back into warnings
         with:
+          # — Azure credentials —
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ORANGE_ROCK_04FC8700F }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "./frontend" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "build" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          repo_token: ${{ secrets.GITHUB_TOKEN }}  # enables PR comments
 
+          # — Action settings —
+          action: upload
+          app_location: "./frontend"     # path to React app
+          api_location: ""               # (none)
+          output_location: "build"       # CRA build output
+          app_build_command: "npm run build"
+          # optional: pin Node version used by Oryx
+          node_version: "20"
+
+  # ────────────────────────────── Close PR Preview ─────────────────────────────
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
@@ -43,4 +54,4 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ORANGE_ROCK_04FC8700F }}
-          action: "close"
+          action: close
