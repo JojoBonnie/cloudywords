@@ -65,10 +65,10 @@ const CreateWordCloud = () => {
       setError(null);
       
       const response = await aiApi.getWordSuggestions(aiTopic, aiCount);
-      
+      console.log('AI response:', response.data);
       setFormData({
         ...formData,
-        input_text: response.data.text,
+        input_text: response.data.words.join(', '),
         is_ai_generated: true
       });
       
@@ -350,14 +350,14 @@ const CreateWordCloud = () => {
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
                       >
-                        <option value="default">Default</option>
-                        <option value="blues">Blues</option>
-                        <option value="reds">Reds</option>
-                        <option value="greens">Greens</option>
-                        <option value="purples">Purples</option>
-                        <option value="oranges">Oranges</option>
-                        <option value="greys">Greys</option>
-                        <option value="rainbow">Rainbow</option>
+                        <option value="Default">Default</option>
+                        <option value="Blues">Blues</option>
+                        <option value="Reds">Reds</option>
+                        <option value="Greens">Greens</option>
+                        <option value="Purples">Purples</option>
+                        <option value="Oranges">Oranges</option>
+                        <option value="Greys">Greys</option>
+                        <option value="Rainbow">Rainbow</option>
                       </select>
                     </div>
                   </div>

@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from core.models import WordCloud, UserCredit
+from wordcloud_core.models import WordCloud, UserCredit
 
 
 class WordCloudSerializer(serializers.ModelSerializer):
     """Serializer for WordCloud model"""
-    
+
     class Meta:
         model = WordCloud
         fields = [
@@ -45,7 +45,7 @@ class AIWordSuggestionsSerializer(serializers.Serializer):
 
 class UserCreditSerializer(serializers.ModelSerializer):
     """Serializer for user credits"""
-    
+
     class Meta:
         model = UserCredit
         fields = ['credits_remaining', 'last_updated']

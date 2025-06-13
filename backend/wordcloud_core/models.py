@@ -36,18 +36,19 @@ class WordCloud(models.Model):
         ('trebuchet', 'Trebuchet MS'),
         ('comic', 'Comic Sans MS'),
     ]
-    
+
     COLOR_SCHEME_CHOICES = [
-        ('default', 'Default'),
-        ('blues', 'Blues'),
-        ('reds', 'Reds'),
-        ('greens', 'Greens'),
-        ('purples', 'Purples'),
-        ('oranges', 'Oranges'),
-        ('greys', 'Greys'),
-        ('rainbow', 'Rainbow'),
+        ('Default', 'Default'),
+        ('Blues', 'Blues'),
+        ('Reds', 'Reds'),
+        ('Greens', 'Greens'),
+        ('Purples', 'Purples'),
+        ('Oranges', 'Oranges'),
+        ('Greys', 'Greys'),
+        ('Rainbow', 'Rainbow'),
+        # Optionally, add more valid Matplotlib colormaps here
     ]
-    
+
     ORIENTATION_CHOICES = [
         ('horizontal', 'Horizontal'),
         ('vertical', 'Vertical'),
@@ -58,21 +59,21 @@ class WordCloud(models.Model):
     title = models.CharField(max_length=100)
     input_text = models.TextField()
     is_ai_generated = models.BooleanField(default=False)
-    
+
     # Customization options
     width = models.PositiveIntegerField(default=800)
     height = models.PositiveIntegerField(default=400)
     font = models.CharField(max_length=20, choices=FONT_CHOICES, default='arial')
-    color_scheme = models.CharField(max_length=20, choices=COLOR_SCHEME_CHOICES, default='default')
+    color_scheme = models.CharField(max_length=20, choices=COLOR_SCHEME_CHOICES, default='Default')
     background_color = models.CharField(max_length=20, default='white')
     max_words = models.PositiveIntegerField(default=200)
-    word_density = models.PositiveIntegerField(default=80)  # Scale of 1-100
+    word_density = models.PositiveIntegerField(default=80)  # Scale of 1–100
     orientation = models.CharField(max_length=20, choices=ORIENTATION_CHOICES, default='random')
-    
+
     # Storage details
     image_url = models.URLField(blank=True, null=True)
     svg_url = models.URLField(blank=True, null=True)
-    
+
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
