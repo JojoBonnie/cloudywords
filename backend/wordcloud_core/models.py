@@ -38,14 +38,12 @@ class WordCloud(models.Model):
     ]
 
     COLOR_SCHEME_CHOICES = [
-        ('Default', 'Default'),
-        ('Blues', 'Blues'),
         ('Reds', 'Reds'),
-        ('Greens', 'Greens'),
-        ('Purples', 'Purples'),
         ('Oranges', 'Oranges'),
+        ('Greens', 'Greens'),
+        ('Blues', 'Blues'),
+        ('Purples', 'Purples'),
         ('Greys', 'Greys'),
-        ('Rainbow', 'Rainbow'),
         # Optionally, add more valid Matplotlib colormaps here
     ]
 
@@ -64,7 +62,7 @@ class WordCloud(models.Model):
     width = models.PositiveIntegerField(default=800)
     height = models.PositiveIntegerField(default=400)
     font = models.CharField(max_length=20, choices=FONT_CHOICES, default='arial')
-    color_scheme = models.CharField(max_length=20, choices=COLOR_SCHEME_CHOICES, default='Default')
+    color_scheme = models.CharField(max_length=20, choices=COLOR_SCHEME_CHOICES, default='Reds')
     background_color = models.CharField(max_length=20, default='white')
     max_words = models.PositiveIntegerField(default=200)
     word_density = models.PositiveIntegerField(default=80)  # Scale of 1–100
