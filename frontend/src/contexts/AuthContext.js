@@ -49,20 +49,20 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
       setError(null); // Clear previous errors
-      
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login/`, { 
-        email, 
-        password 
+
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login/`, {
+        email,
+        password
       });
-      
+
       // Store token in localStorage
       // Handle both token formats (JWT and regular token)
       const token = response.data.access_token || response.data.access || response.data.key;
-      
+
       if (!token) {
         throw new Error('No authentication token received');
       }
-      
+
       localStorage.setItem('token', token);
 
       // Set default Authorization header
@@ -100,14 +100,14 @@ export const AuthProvider = ({ children }) => {
         password2
       });
 
-      toast.success('Registration successful! Please check your email to verify your account.');
+      toast.success('Registration successful!');
       setLoading(false);
       return true;
     } catch (err) {
       console.error('Registration error:', err);
-      const errorMsg = err.response?.data?.detail || 
-                       Object.values(err.response?.data || {}).flat().join(' ') || 
-                       'Registration failed. Please try again.';
+      const errorMsg = err.response?.data?.detail ||
+        Object.values(err.response?.data || {}).flat().join(' ') ||
+        'Registration failed. Please try again.';
       setError(errorMsg);
       toast.error(errorMsg);
       setLoading(false);
