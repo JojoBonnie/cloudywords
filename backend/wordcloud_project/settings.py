@@ -222,7 +222,6 @@ AZURE_CONTAINER_NAME = os.environ.get('AZURE_CONTAINER_NAME', 'wordclouds')
 DEFAULT_FILE_STORAGE = 'wordcloud_project.custom_azure.AzureMediaStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = f'https://cdn.profesaas.com/{AZURE_CONTAINER_NAME}/'
-'https://pfefstorage.blob.core.windows.net/wordclouds/wordclouds/9cf42935-40a8-49a7-85e2-aed332919c0c.png'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
